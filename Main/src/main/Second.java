@@ -13,12 +13,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Second extends javax.swing.JFrame {
 
-    DefaultTableModel model1 = new DefaultTableModel();
+    DefaultTableModel model2 = new DefaultTableModel();
 
     public Second() {
         initComponents();
-        model1 = (DefaultTableModel) Table1.getModel();
-        model1.setRowCount(0);
+        model2 = (DefaultTableModel) Table1.getModel();
+        model2.setRowCount(0);
 
     }
 
@@ -49,15 +49,23 @@ public class Second extends javax.swing.JFrame {
 
         Table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Add to Cart", "Weapon_ID", "Name", "Type", "Price"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(Table1);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 800, 160));

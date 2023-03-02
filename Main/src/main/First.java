@@ -13,6 +13,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,15 +22,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class First extends javax.swing.JFrame {
 
-    DefaultTableModel model = new DefaultTableModel();
+    DefaultTableModel model1 = new DefaultTableModel();
 
     /**
      * Creates new form First
      */
     public First() {
         initComponents();
-        model = (DefaultTableModel) Table.getModel();
-        model.setRowCount(0);
+        model1 = (DefaultTableModel) Table.getModel();
+        model1.setRowCount(0);
         setBounds(237, 62, 911, 682);
     }
 
@@ -64,13 +65,13 @@ public class First extends javax.swing.JFrame {
 
         Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Class", "Name", "Type", "Price"
+                "Weapon ID", "Class", "Name", "Type", "Price"
             }
         ));
         jScrollPane1.setViewportView(Table);
@@ -154,6 +155,41 @@ public class First extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     Menu menu;
 
+    void showdata(int modelnumber) {
+
+        Second second = new Second();
+        Third third = new Third();
+        DBConnection.init();
+        Connection c = DBConnection.getConnection();
+        PreparedStatement ps;
+        try {
+            ps = c.prepareStatement("Select * from weapon_shop.weapon_store");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                
+                model1.addRow(new Object[]{rs.getString("weapon_id"), rs.getString("class"), rs.getString("name"), rs.getString("type"), rs.getString("price")});
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    void InputData() {
+        DBConnection.init();
+        Connection c = DBConnection.getConnection();
+        PreparedStatement ps;
+        try {
+            ps = c.prepareStatement("INSERT INTO weapon_shop.weapon_store (class, name, type, price)\n"
+                    + "VALUES ('" + classfield.getText() + "','" + namefield.getText() + "','" + typefield.getText() + "','" + pricefield.getText() + "')");
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void getMenu() {
         this.menu.swordbutton.setOpaque(false);
     }
@@ -164,25 +200,15 @@ public class First extends javax.swing.JFrame {
 
 
     private void inputbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputbuttonActionPerformed
-        DBConnection.init();
-        Connection c = DBConnection.getConnection();
-        PreparedStatement ps;
-        try {
-            ps = c.prepareStatement("Select * from weapon_shop.weapon_store");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                System.out.println(":" + rs.getString("class") + " ," + rs.getString("name") + " ," + rs.getString("type") + " ," + rs.getString("price"));
-            }
+        if (classfield.getText().equals("Bow") || classfield.getText().equals("Sword") || classfield.getText().equals("Shield")) {
+            InputData();
+            showdata(1);
 
-            Scanner input = new Scanner(System.in);
-
-            ps = c.prepareStatement("INSERT INTO weapon_shop.weapon_store (class, name, type, price)\n"
-                    + "VALUES ('" + classfield.getText() + "','" + namefield.getText() + "','" + typefield.getText() + "','" + pricefield.getText() + "')");
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            JOptionPane.showMessageDialog(null, "The Item You Are Trying To Input \n Does Not Belong To Any Know Classes", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        model.addRow(new Object[]{classfield.getText(), namefield.getText(), typefield.getText(), pricefield.getText()});
+
+
     }//GEN-LAST:event_inputbuttonActionPerformed
 
     private void nextbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextbuttonActionPerformed
@@ -194,7 +220,7 @@ public class First extends javax.swing.JFrame {
     }//GEN-LAST:event_nextbuttonActionPerformed
 
     private void clearbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearbuttonActionPerformed
-        model.removeRow(1);
+        model1.removeRow(1);
 
     }//GEN-LAST:event_clearbuttonActionPerformed
 

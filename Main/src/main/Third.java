@@ -12,14 +12,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Custodio_OOPCOMP121
  */
 public class Third extends javax.swing.JFrame {
-    DefaultTableModel model2 = new DefaultTableModel();
+    DefaultTableModel model3 = new DefaultTableModel();
     /**
      * Creates new form Third
      */
     public Third() {
         initComponents();
-        model2=(DefaultTableModel) Table2.getModel();
-        model2.setRowCount(0);
+        model3=(DefaultTableModel) Table2.getModel();
+        model3.setRowCount(0);
         
     }
 
@@ -44,17 +44,17 @@ public class Third extends javax.swing.JFrame {
 
         Table2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Add to Cart", "Name", "Type", "Price"
+                "Add to Cart", "Weapon ID", "Name", "Type", "Price"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -79,7 +79,7 @@ public class Third extends javax.swing.JFrame {
         });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 220, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Shield Relics final icons - MagiQuest 3_0 by Ruthac-Arus on DeviantArt (1).jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fantasy bow designs (1).jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -6, 900, 505));
 
         pack();

@@ -94,39 +94,57 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
  
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        First first = new First();
-        first.setVisible(true);
-        this.setVisible(false);
-        System.out.println(getBounds());
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void swordbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swordbuttonActionPerformed
-        Second second = new Second();
-        second.setVisible(true);
-        this.setVisible(false);
-        
-        DBConnection.init();
+    
+    
+    void LoadData(int modelnumber){
+    First first = new First();
+    Second second = new Second();
+    Third third = new Third();
+    DBConnection.init();
         Connection c = DBConnection.getConnection();
         PreparedStatement ps;
         try {
-            ps = c.prepareStatement("Select * from weapon_shop.weapon_store Where class = 'Sword'");
+            ps = c.prepareStatement("Select * from weapon_shop.weapon_store");
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-               
-                second.model1.addRow(new Object []{false,rs.getString("weapong_id"),rs.getString("name"), rs.getString("type"), rs.getString("price")});
-            }        
+            while (rs.next()) {                
+                switch(modelnumber){
+                    case 1:
+                    ps = c.prepareStatement("Select * from weapon_shop.weapon_store WHERE class ='Sword'");
+                    first.model1.addRow(new Object[]{rs.getString("weapon_id"),rs.getString("class"),rs.getString("name"),rs.getString("type"),rs.getString("price")});   
+                    first.setVisible(true);
+                    break;
+                    
+                    case 2:
+                    ps = c.prepareStatement("Select * from weapon_shop.weapon_store WHERE class ='Bow'");                  
+                    second.model2.addRow(new Object []{false,rs.getString("weapon_id"),rs.getString("name"), rs.getString("type"), rs.getString("price")});
+                    second.setVisible(true);
+                    break;
+                
+                    case 3:
+                    ps = c.prepareStatement("Select * from weapon_shop.weapon_store WHERE class ='Shield'");     
+                    third.model3.addRow(new Object []{false,rs.getString("weapon_id"),rs.getString("name"), rs.getString("type"), rs.getString("price")});
+                    third.setVisible(true);
+                    break;
+                }          
+           }        
             
         } catch (SQLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+    }
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        LoadData(1);       
+        this.setVisible(false);            
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void swordbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_swordbuttonActionPerformed
+        LoadData(2);       
+        this.setVisible(false);       
     }//GEN-LAST:event_swordbuttonActionPerformed
 
     private void bowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bowActionPerformed
-        Third third = new Third();
-        third.setVisible(true);
-        this.setVisible(false);
+        LoadData(3);     
+        this.setVisible(false);  
     }//GEN-LAST:event_bowActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
